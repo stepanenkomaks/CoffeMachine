@@ -1,0 +1,223 @@
+package machine;
+
+import java.util.Scanner;
+
+enum Drinks {
+    Espresso {
+        final int water = 250;
+        final int milk = 0;
+        final int beans = 16;
+        final int money = 4;
+
+        public int getWater() {
+            return water;
+        }
+
+        public int getMilk() {
+            return milk;
+        }
+
+        public int getMoney() {
+            return money;
+        }
+
+        public int getBeans() {
+            return beans;
+        }
+    }, Latte {
+        final int water = 350;
+        final int milk = 75;
+        final int beans = 20;
+        final int money = 7;
+
+        public int getWater() {
+            return water;
+        }
+
+        public int getMilk() {
+            return milk;
+        }
+
+        public int getMoney() {
+            return money;
+        }
+
+        public int getBeans() {
+            return beans;
+        }
+    }, Cappuccino {
+        final int water = 200;
+        final int milk = 100;
+        final int beans = 12;
+        final int money = 6;
+
+        public int getWater() {
+            return water;
+        }
+
+        public int getMilk() {
+            return milk;
+        }
+
+        public int getMoney() {
+            return money;
+        }
+
+        public int getBeans() {
+            return beans;
+        }
+    };
+
+    public abstract int getWater();
+    public abstract int getMilk();
+    public abstract int getMoney();
+    public abstract int getBeans();
+}
+
+class Action {
+
+    int water = 400;
+    int milk = 540;
+    int beans = 120;
+    int money = 550;
+    int cups = 9;
+
+    void Buy(String choice) {
+        Drinks espresso = Drinks.Espresso;
+        Drinks latte = Drinks.Latte;
+        Drinks cappuccino = Drinks.Cappuccino;
+        if (cups < 1){
+            System.out.println("Sorry, not enough cups!");
+        }
+        switch (choice) {
+            case "1":
+                if (this.water < espresso.getWater()) {
+                    System.out.println("Sorry, not enough water!");
+                    break;
+                }
+                if (this.milk < espresso.getMilk()) {
+                    System.out.println("Sorry, not enough milk!");
+                    break;
+                }
+                if (this.beans < espresso.getBeans()) {
+                    System.out.println("Sorry, not enough beans!");
+                    break;
+                }
+                water -= espresso.getWater();
+                money += espresso.getMoney();
+                milk -= espresso.getMilk();
+                beans -= espresso.getBeans();
+                cups--;
+                System.out.println("I have enough resources, making you a coffee!");
+                break;
+            case "2":
+                if (this.water < latte.getWater()) {
+                    System.out.println("Sorry, not enough water!");
+                    break;
+                }
+                if (this.milk < latte.getMilk()) {
+                    System.out.println("Sorry, not enough milk!");
+                    break;
+                }
+                if (this.beans < latte.getBeans()) {
+                    System.out.println("Sorry, not enough beans!");
+                    break;
+                }
+                water -= latte.getWater();
+                money += latte.getMoney();
+                milk -= latte.getMilk();
+                beans -= latte.getBeans();
+                cups--;
+                System.out.println("I have enough resources, making you a coffee!");
+                break;
+            case "3":
+                if (this.water < cappuccino.getWater()) {
+                    System.out.println("Sorry, not enough water!");
+                    break;
+                }
+                if (this.milk < cappuccino.getMilk()) {
+                    System.out.println("Sorry, not enough milk!");
+                    break;
+                }
+                if (this.beans < cappuccino.getBeans()) {
+                    System.out.println("Sorry, not enough beans!");
+                    break;
+                }
+                water -= cappuccino.getWater();
+                money += cappuccino.getMoney();
+                milk -= cappuccino.getMilk();
+                beans -= cappuccino.getBeans();
+                cups--;
+                System.out.println("I have enough resources, making you a coffee!");
+                break;
+            case "back":
+                break;
+            default:
+                System.out.println("Try again!");
+        }
+    }
+
+    void Fill(int kolW, int kolM, int kolB, int kolC) {
+        water += kolW;
+        milk += kolM;
+        beans += kolB;
+        cups += kolC;
+    }
+
+    void Take() {
+        money = 0;
+        System.out.println("I gave you $" + money);
+    }
+
+    void Remaining() {
+        System.out.println("\nThe coffee machine has:\n" +
+                water + " ml of water\n" +
+                milk +" ml of milk\n" +
+                beans + " g of coffee beans\n" +
+                cups + " disposable cups\n" +
+                "$" + money + " of money");
+    }
+}
+
+
+public class CoffeeMachine {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        boolean check = true;
+        Action start = new Action();
+        while (check) {
+            System.out.println(" ");
+            System.out.println("Write action (buy, fill, take, remaining, exit):");
+            String action = sc.nextLine();
+            switch (action) {
+                case "buy":
+                    System.out.println("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino, back - to main menu:");
+                    String choice = sc.nextLine();
+                    start.Buy(choice);
+                    break;
+                case "fill":
+                    System.out.println("Write how many ml of water you want to add:");
+                    int kolW = sc.nextInt();
+                    System.out.println("Write how many ml of milk you want to add:");
+                    int kolM = sc.nextInt();
+                    System.out.println("Write how many grams of coffee beans you want to add:");
+                    int kolB = sc.nextInt();
+                    System.out.println("Write how many disposable cups of coffee you want to add:");
+                    int kolC = sc.nextInt();
+                    start.Fill(kolW, kolM, kolB, kolC);
+                    break;
+                case "take":
+                    start.Take();
+                    break;
+                case "remaining":
+                    start.Remaining();
+                    break;
+                case "exit":
+                    check = false;
+                    break;
+                default:
+                    System.out.println("Something is wrong! Try again");
+            }
+        }
+    }
+}
